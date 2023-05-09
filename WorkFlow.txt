@@ -1,0 +1,123 @@
+Data points extraction for floors, walls, rooms, windows and doors
+
+
+
+Floors
+______
+
+1. detect.outer_contours
+	-cv2.threshold
+	-cv2.findContours
+	-cv2.arcLength
+	-cv2.approxPolyDP
+	-cv2.drawContours
+2. transform.scale_point_to_vector
+3. save to file
+	
+Walls
+_____
+
+1. detect.wall_filter
+	-cv2.threshold
+	-cv2.morphologyEx
+	-cv2.dilate
+	-cv2.distanceTranform
+	-cv2.threshold
+	-cv2.subtract
+2. detect.precise_boxes
+	-cv2.findContours
+	-cv2.arcLength
+	-cv2.approxPolyDP
+	-cv2.drawContours
+3. detect.outer_contours
+	-cv2.threshold
+	-cv2.findContours
+	-cv2.arcLength
+	-cv2.approxPolyDP
+	-cv2.drawContours
+4. calculate.remove_walls_not_in_contour
+5. transform.create_nx4_verts_and_faces
+6. save to file
+
+Rooms
+_____
+
+1. detect.wall_filter
+	-cv2.threshold
+	-cv2.morphologyEx
+	-cv2.dilate
+	-cv2.distanceTranform
+	-cv2.threshold
+	-cv2.subtract
+2. detect.find_rooms
+	-image.remove_noise
+		-cv2.findContours
+		-cv2.fillPoly
+	-image.mark_outside_black
+		-cv2.findContours
+		-cv2.fillPoly
+	cv2.connectedComponents
+	cv2.cvtColor
+3. cv2.cvtColor
+4. detect.precise_boxes
+	-cv2.findContours
+	-cv2.arcLength
+	-cv2.approxPolyDP
+	-cv2.drawContours
+5. transform.create_nx4_verts_and_faces
+6. save to file
+
+Windows
+_______
+
+1. detect.windows
+	-feature_match
+		-cv2.ORB_create
+		-orb.detectAndCompute
+		-cv2.goodFeaturesToTrack
+		-calculate.best_matches_with_modulus_angle
+		-calculate.angle_between_vectors_2d
+		-transform.rotate_round_origin_vector_2d
+		-wall_filter
+		-find_rooms
+		-find_details
+		-cv2.cvtColor
+		-precise_boxes
+		-calculate.points_are_inside_or_close_to_box
+		-cv2.boundingRect
+		-transform.rescale_rect
+2. transform.create_nx4_verts_and_faces
+3. save to file
+
+Doors
+_____
+
+
+1. detect.doors
+	-feature_match
+		-cv2.ORB_create
+		-orb.detectAndCompute
+		-cv2.goodFeaturesToTrack
+		-calculate.best_matches_with_modulus_angle
+		-calculate.angle_between_vectors_2d
+		-transform.rotate_round_origin_vector_2d
+		-wall_filter
+		-find_rooms
+		-find_details
+		-cv2.cvtColor
+		-precise_boxes
+		-calculate.points_are_inside_or_close_to_box
+		-cv2.boundingRect
+		-transform.rescale_rect
+	-get_point_furthest_away
+		-calculate.box_center
+		-calculate.euclidean_distance_2d
+	-get_closest_box_point_to_door_point
+		-cv2.boundingRect
+		-calculate.euclidean_distance_2d
+2. calculate.normalize_2d
+3. transform.create_nx4_verts_and_faces
+4. save to file
+	
+		
+
