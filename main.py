@@ -69,7 +69,8 @@ def create_blender_project(data_paths):
         print("Object created at:" + program_path + target_base + outformat)
 
     print("Project created at: " + program_path + target_path)
-
+    command = blender_install_path + " " + target_path
+    check_output(command)
 
 if __name__ == "__main__":
     """
